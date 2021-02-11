@@ -2,6 +2,8 @@ package com.rubypaper;
 
 import java.util.Date;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,20 @@ public class BoardRepositoryTest {
 	private BoardRepository boardRepo;
 
 	//p250
-	@Test
+/*	@Test
 	public void testInsertBoard() {
+		Board board = new Board();
+		board.setTitle("첫 번째 게시글");
+		board.setWriter("테스터");
+		board.setContent("잘 등록되나요?");
+		board.setCreateDate(new Date());
+		board.setCnt(0L);
+
+		boardRepo.save(board);
+	}*/
+
+	@Before
+	public void dataPrepare() {
 		Board board = new Board();
 		board.setTitle("첫 번째 게시글");
 		board.setWriter("테스터");
@@ -32,11 +46,17 @@ public class BoardRepositoryTest {
 		boardRepo.save(board);
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		boardRepo.deleteAll();
+	}
+
 	//p252 - spring.jpa.hibernate.ddl-auto=update 로 세팅 후
 	@Test
 	public void testGetBoard() {
 		Board board = boardRepo.findById(1L).get();
 		System.out.println(board.toString());
+/*
 	}
 
 	//p253
@@ -44,6 +64,7 @@ public class BoardRepositoryTest {
 	public void testUpdateBoard() {
 		System.out.println("=== 1번 게시글 조회 ===");
 		Board board = boardRepo.findById(1L).get();
+*/
 
 		System.out.println("=== 1번 게시글 제목 수정 ===");
 		board.setTitle("제목을 수정했습니다.");
@@ -51,9 +72,9 @@ public class BoardRepositoryTest {
 	}
 
 	//p255
-	@Test
+	/*@Test
 	public void testDeleteBoard() {
 		boardRepo.deleteById(1L);
-	}
+	}*/
 	
 }
